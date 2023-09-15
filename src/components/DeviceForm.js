@@ -64,16 +64,17 @@ const DeviceForm = ({ id, setDeviceId }) => {
 
   return (
     <>
-      {message?.msg && (
-        <Alert
-          variant={message?.error ? "danger" : "success"}
-          dismissible
-          onClose={() => setMessage("")}
-        >
-          {message?.msg}
-        </Alert>
-      )}
       <div className="container">
+        <h1>Device Form</h1>
+        {message?.msg && (
+          <Alert
+            variant={message?.error ? "danger" : "success"}
+            dismissible
+            onClose={() => setMessage("")}
+          >
+            {message?.msg}
+          </Alert>
+        )}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicDevice">
             <Form.Label>Device Name</Form.Label>

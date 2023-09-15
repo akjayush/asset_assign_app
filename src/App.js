@@ -7,7 +7,8 @@ import "./App.css";
 import Navbars from "./components/Navbars";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import AssignDevice from "./components/AssignDevice";
-import EmployeeList from "./components/EmployeeList";
+import EmployeeForm from "./components/EmployeeForm";
+import EmployeeFormList from "./components/EmployeeFormList";
 
 function App() {
   const [deviceId, setDeviceId] = useState("");
@@ -16,6 +17,14 @@ function App() {
     console.log("The ID of document to be edited: ", id);
     setDeviceId(id);
   };
+
+  const [employeeId, setEmployeeId] = useState("");
+
+  const getEmployeeIdHandler = (id) => {
+    console.log("The ID of document to be edited: ", id);
+    setEmployeeId(id);
+  };
+
   return (
     <>
       <Router>
@@ -33,7 +42,14 @@ function App() {
             </Container>
           </Route>
           <Route exact path="/employeepage">
-            <EmployeeList />
+            <EmployeeForm id={employeeId} setEmployeeId={setEmployeeId} />
+            <Container>
+              <Row>
+                <Col>
+                  <EmployeeFormList getEmployeeId={getEmployeeIdHandler} />
+                </Col>
+              </Row>
+            </Container>
           </Route>
           <Route exact path="/assignpage">
             <AssignDevice />
