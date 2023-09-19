@@ -9,9 +9,12 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import AssignDevice from "./components/AssignDevice";
 import EmployeeForm from "./components/EmployeeForm";
 import EmployeeFormList from "./components/EmployeeFormList";
+import AssignDeviceList from "./components/AssignDeviceList";
 
 function App() {
   const [deviceId, setDeviceId] = useState("");
+
+  const [assigndevices, setassignDevices] = useState([]);
 
   const getDeviceIdHandler = (id) => {
     console.log("The ID of document to be edited: ", id);
@@ -23,6 +26,13 @@ function App() {
   const getEmployeeIdHandler = (id) => {
     console.log("The ID of document to be edited: ", id);
     setEmployeeId(id);
+  };
+
+  const [assigndeviceId, setAssignDeviceId] = useState("");
+
+  const getAssignDeviceIdHandler = (id) => {
+    console.log("The ID of document to be edited: ", id);
+    setAssignDeviceId(id);
   };
 
   return (
@@ -52,7 +62,23 @@ function App() {
             </Container>
           </Route>
           <Route exact path="/assignpage">
-            <AssignDevice />
+            <AssignDevice
+              id={assigndeviceId}
+              setAssignDeviceId={setAssignDeviceId}
+              assigndevices={assigndevices}
+            />
+            <Container>
+              <Row>
+                <Col>
+                  <AssignDeviceList
+                    assigndevices={assigndevices}
+                    setassignDevices={setassignDevices}
+                    getAssignDeviceId={getAssignDeviceIdHandler}
+                  />
+                </Col>
+              </Row>
+            </Container>
+            {/* <AssignDevice /> */}
           </Route>
         </Switch>
       </Router>
