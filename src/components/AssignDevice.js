@@ -89,9 +89,6 @@ const AssignDevice = ({
     let output = temp.filter((item) => {
       return !selectdevices.includes(item.serial);
     });
-    console.log("OUTPUT", output);
-    console.log("TEMP", temp);
-    console.log("SELECTDEVICES", selectdevices);
     setDevices(output);
   };
 
@@ -103,7 +100,6 @@ const AssignDevice = ({
     setEmployees(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
 
-  console.log("RENDER: ", assigndevices);
   return (
     <>
       <div className="container">

@@ -36,8 +36,8 @@ const AssignDeviceList = ({
         <thead>
           <tr>
             <th>#</th>
-            <th>Device</th>
-            <th>Gmail</th>
+            <th>Device Serial Number</th>
+            <th>User Gmail</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
