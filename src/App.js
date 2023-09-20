@@ -15,6 +15,7 @@ function App() {
   const [deviceId, setDeviceId] = useState("");
 
   const [assigndevices, setassignDevices] = useState([]);
+  // const [assignemployess, setassignEmployess] = useState([]);
 
   const getDeviceIdHandler = (id) => {
     console.log("The ID of document to be edited: ", id);
@@ -66,12 +67,15 @@ function App() {
               id={assigndeviceId}
               setAssignDeviceId={setAssignDeviceId}
               assigndevices={assigndevices}
+              // assignemployess={assignemployess}
             />
             <Container>
               <Row>
                 <Col>
                   <AssignDeviceList
                     assigndevices={assigndevices}
+                    // assignemployess={assignemployess}
+                    // setassignEmployess={setassignEmployess}
                     setassignDevices={setassignDevices}
                     getAssignDeviceId={getAssignDeviceIdHandler}
                   />

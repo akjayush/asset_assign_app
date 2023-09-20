@@ -89,15 +89,39 @@ const AssignDevice = ({
     let output = temp.filter((item) => {
       return !selectdevices.includes(item.serial);
     });
+    console.log("SELECTdevics", selectdevices);
+    // console.log("TEMP", temp);
+    // console.log("OUTPUT", output);
     setDevices(output);
   };
+  console.log("SETDEVICES", setDevices);
 
   const [employees, setEmployees] = useState([]);
+
+  useEffect(() => {
+    getDevices();
+    getEmployees();
+  }, []);
+
+  useEffect(() => {
+    getDevices();
+    getEmployees();
+  }, [assigndevices]);
 
   const getEmployees = async () => {
     const data = await EmployeeDataService.getAllEmployees();
     console.log(data.docs);
-    setEmployees(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+
+    const selectemployees = assigndevices.map((item) => item.selectuser);
+
+    let temps = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+    let outputs = temps.filter((item) => {
+      return !selectemployees.includes(item.email);
+    });
+    console.log("SELECTUSER", selectemployees);
+    console.log("TEMP", temps);
+    console.log("OUTPUT", outputs);
+    setEmployees(outputs);
   };
 
   return (
