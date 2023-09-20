@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./DeviceForm.css";
 import { Form, Alert, Button, ButtonGroup } from "react-bootstrap";
 import DeviceDataService from "../services/device.services";
 import EmployeeDataService from "../services/employee.service";
