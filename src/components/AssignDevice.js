@@ -56,7 +56,7 @@ const AssignDevice = ({
     if (message?.error) {
       timer = setTimeout(() => {
         setMessage(null);
-      }, 4000);
+      }, 1500);
     }
 
     return () => clearTimeout(timer);
