@@ -42,6 +42,18 @@ const DeviceForm = ({ id, setDeviceId }) => {
     setSerial("");
   };
 
+  useEffect(() => {
+    let timer;
+
+    if (message?.error) {
+      timer = setTimeout(() => {
+        setMessage(null);
+      }, 1500);
+    }
+
+    return () => clearTimeout(timer);
+  }, [message]);
+
   const editHandler = async () => {
     setMessage("");
     try {

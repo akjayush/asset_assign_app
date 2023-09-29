@@ -41,11 +41,26 @@ const AssignDevice = ({
         setMessage({ error: false, msg: "Assigned successfully" });
       }
     } catch (err) {
-      setMessage({ error: true, msg: err.message });
+      setMessage({
+        error: true,
+        msg: "An error occurred while saving the data.",
+      });
     }
     setselectDevice("");
     setselectUser("");
   };
+
+  useEffect(() => {
+    let timer;
+
+    if (message?.error) {
+      timer = setTimeout(() => {
+        setMessage(null);
+      }, 4000);
+    }
+
+    return () => clearTimeout(timer);
+  }, [message]);
 
   const editHandler = async () => {
     setMessage("");
@@ -117,9 +132,7 @@ const AssignDevice = ({
     let outputs = temps.filter((item) => {
       return !selectemployees.includes(item.email);
     });
-    console.log("SELECTUSER", selectemployees);
-    console.log("TEMP", temps);
-    console.log("OUTPUT", outputs);
+
     setEmployees(outputs);
   };
 
