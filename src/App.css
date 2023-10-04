@@ -82,3 +82,7 @@ h1 {
   text-align: center;
   padding: 9px;
 }
+
+.cont {
+  overflow: scroll;
+}

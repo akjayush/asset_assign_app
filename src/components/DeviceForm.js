@@ -100,7 +100,7 @@ const DeviceForm = ({ id, setDeviceId }) => {
           <Form.Group className="mb-3" controlId="formBasicSerial">
             <Form.Label>Device Serial Number</Form.Label>
             <Form.Control
-              type="number"
+              type="text"
               placeholder="Device Serial Number"
               value={serial}
               onChange={(e) => setSerial(e.target.value)}

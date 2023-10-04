@@ -27,46 +27,48 @@ const EmployeeFormList = ({ getEmployeeId }) => {
           Refresh List
         </Button>
       </div>
-      {/* <pre>{JSON.stringify(devices, undefined, 2)}</pre> */}
-      <Table striped bordered hover size="sm">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Employee Id</th>
-            <th>Name</th>
-            <th>Gmail</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {employees.map((doc, index) => {
-            return (
-              <tr key={doc.id}>
-                <td>{index + 1}</td>
-                <td>{doc.empid}</td>
-                <td>{doc.name}</td>
-                <td>{doc.email}</td>
-                <td>
-                  <Button
-                    variant="secondary"
-                    className="edit"
-                    onClick={(e) => getEmployeeId(doc.id)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="danger"
-                    className="delete"
-                    onClick={(e) => deleteHandler(doc.id)}
-                  >
-                    Delete
-                  </Button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
+      <div className="cont">
+        {/* <pre>{JSON.stringify(devices, undefined, 2)}</pre> */}
+        <Table striped bordered hover size="sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Employee Id</th>
+              <th>Name</th>
+              <th>Gmail</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {employees.map((doc, index) => {
+              return (
+                <tr key={doc.id}>
+                  <td>{index + 1}</td>
+                  <td>{doc.empid}</td>
+                  <td>{doc.name}</td>
+                  <td>{doc.email}</td>
+                  <td>
+                    <Button
+                      variant="secondary"
+                      className="edit"
+                      onClick={(e) => getEmployeeId(doc.id)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="danger"
+                      className="delete"
+                      onClick={(e) => deleteHandler(doc.id)}
+                    >
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      </div>
     </>
   );
 };
