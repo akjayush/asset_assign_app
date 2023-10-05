@@ -5,6 +5,8 @@ import DeviceDataService from "../services/device.services";
 
 const DeviceFormList = ({ getDeviceId }) => {
   const [devices, setDevices] = useState([]);
+  const [sortBy, setSortBy] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc");
   useEffect(() => {
     getDevices();
   }, []);
@@ -20,6 +22,27 @@ const DeviceFormList = ({ getDeviceId }) => {
     getDevices();
   };
 
+  const handleSort = (column) => {
+    if (column === sortBy) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortBy(column);
+      setSortOrder("asc");
+    }
+  };
+
+  const sortedDevices = [...devices].sort((a, b) => {
+    if (sortBy === "device" || sortBy === "serial" || sortBy === "status") {
+      return sortOrder === "asc"
+        ? a[sortBy].localeCompare(b[sortBy])
+        : b[sortBy].localeCompare(a[sortBy]);
+    } else {
+      return sortOrder === "asc"
+        ? a[sortBy] - b[sortBy]
+        : b[sortBy] - a[sortBy];
+    }
+  });
+
   return (
     <>
       <div className="mb-2">
@@ -33,14 +56,24 @@ const DeviceFormList = ({ getDeviceId }) => {
           <thead>
             <tr>
               <th>#</th>
-              <th>Device Name</th>
-              <th>Serial Number</th>
-              <th>Status</th>
+              <th onClick={() => handleSort("device")}>
+                Device Name {sortBy === "device" && sortOrder === "asc" && "▲"}
+                {sortBy === "device" && sortOrder === "desc" && "▼"}
+              </th>
+              <th onClick={() => handleSort("serial")}>
+                Serial Number{" "}
+                {sortBy === "serial" && sortOrder === "asc" && "▲"}
+                {sortBy === "serial" && sortOrder === "desc" && "▼"}
+              </th>
+              <th onClick={() => handleSort("status")}>
+                Status {sortBy === "status" && sortOrder === "asc" && "▲"}
+                {sortBy === "status" && sortOrder === "desc" && "▼"}
+              </th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {devices.map((doc, index) => {
+            {sortedDevices.map((doc, index) => {
               return (
                 <tr key={doc.id}>
                   <td>{index + 1}</td>
