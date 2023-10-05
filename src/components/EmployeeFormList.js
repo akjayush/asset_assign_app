@@ -19,8 +19,14 @@ const EmployeeFormList = ({ getEmployeeId }) => {
   };
 
   const deleteHandler = async (id) => {
-    await EmployeeDataService.deleteDoc(id);
-    getEmployees();
+    const shouldDelete = window.confirm(
+      "Are you sure you want to delete this employee?"
+    );
+
+    if (shouldDelete) {
+      await EmployeeDataService.deleteDoc(id);
+      getEmployees();
+    }
   };
 
   const handleSort = (column) => {

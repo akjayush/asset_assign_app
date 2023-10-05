@@ -22,8 +22,14 @@ const AssignDeviceList = ({
   };
 
   const deleteHandler = async (id) => {
-    await AssignDeviceDataService.deleteDoc(id);
-    getAssignDevices();
+    const shouldDelete = window.confirm(
+      "Are you sure you want to delete this employee?"
+    );
+
+    if (shouldDelete) {
+      await AssignDeviceDataService.deleteDoc(id);
+      getAssignDevices();
+    }
   };
 
   const handleSort = (column) => {

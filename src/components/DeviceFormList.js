@@ -18,8 +18,14 @@ const DeviceFormList = ({ getDeviceId }) => {
   };
 
   const deleteHandler = async (id) => {
-    await DeviceDataService.deleteDoc(id);
-    getDevices();
+    const shouldDelete = window.confirm(
+      "Are you sure you want to delete this device?"
+    );
+
+    if (shouldDelete) {
+      await DeviceDataService.deleteDoc(id);
+      getDevices();
+    }
   };
 
   const handleSort = (column) => {
