@@ -43,8 +43,9 @@ function App() {
         <Route exact path="/">
           <Login />
         </Route>
+
         <Switch>
-          <Route exact path="/devicepage">
+          <Route path="/devicepage">
             <DeviceForm id={deviceId} setDeviceId={setDeviceId} />
             <Container>
               <Row>
@@ -54,7 +55,7 @@ function App() {
               </Row>
             </Container>
           </Route>
-          <Route exact path="/employeepage">
+          <Route path="/employeepage">
             <EmployeeForm id={employeeId} setEmployeeId={setEmployeeId} />
             <Container>
               <Row>
@@ -64,7 +65,7 @@ function App() {
               </Row>
             </Container>
           </Route>
-          <Route exact path="/assignpage">
+          <Route path="/assignpage">
             <AssignDevice
               id={assigndeviceId}
               setAssignDeviceId={setAssignDeviceId}
