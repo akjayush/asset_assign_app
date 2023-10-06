@@ -23,7 +23,7 @@ const Login = () => {
           setLoading(false);
           history.push("/devicepage");
           window.location.reload();
-        }, 1000);
+        }, 800);
       })
       .catch((error) => {
         console.log(error);
