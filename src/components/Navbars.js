@@ -8,15 +8,13 @@ import Spinner from "react-bootstrap/Spinner"; // Import Spinner component
 import Button from "react-bootstrap/Button";
 export default function Navbars() {
   const history = useHistory();
-  const [loggingOut, setLoggingOut] = useState(false); // State for the logout loader
+  const [loggingOut, setLoggingOut] = useState(false);
 
-  // Function to handle logout
   const handleLogout = () => {
-    setLoggingOut(true); // Show the loader
+    setLoggingOut(true);
 
     signOut(auth)
       .then(() => {
-        // Redirect user to home page after logout
         history.push("/");
         window.location.reload();
       })
@@ -25,11 +23,10 @@ export default function Navbars() {
       });
   };
 
-  // Use useEffect to hide the loader after 1 minute (60,000 milliseconds)
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setLoggingOut(false); // Hide the loader after 1 minute
-    }, 60000);
+      setLoggingOut(false);
+    }, 1000);
 
     return () => clearTimeout(timeout);
   }, []);
