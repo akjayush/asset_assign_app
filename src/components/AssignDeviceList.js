@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useState } from "react";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Form, Row, Col } from "react-bootstrap";
 import AssignDeviceDataService from "../services/assign.services";
 
 const AssignDeviceList = ({
@@ -8,12 +7,13 @@ const AssignDeviceList = ({
   assigndevices,
   setassignDevices,
 }) => {
-  //const [assigndevices, setassignDevices] = useState([]);
   useEffect(() => {
     getAssignDevices();
   }, []);
+
   const [sortBy, setSortBy] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const getAssignDevices = async () => {
     const data = await AssignDeviceDataService.getAllAssignDevices();
@@ -57,16 +57,39 @@ const AssignDeviceList = ({
     }
   });
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredDevices = sortedDevices.filter(
+    (device) =>
+      device.selectdevice.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      device.selectuser.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      device.status.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <>
-      <div className="mb-2">
-        <Button variant="dark edit" onClick={getAssignDevices}>
-          Refresh List
-        </Button>
-      </div>
+      <Row className="mb-2">
+        <Col xs={8}>
+          <Button variant="dark edit" onClick={getAssignDevices}>
+            Refresh List
+          </Button>
+        </Col>
+        <Col xs={4} className="d-flex justify-content-end">
+          <Form className="search-bar">
+            <Form.Control
+              type="text"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              size="sm" // Make the search input smaller
+            />
+          </Form>
+        </Col>
+      </Row>
 
       <div className="cont">
-        {/* <pre>{JSON.stringify(devices, undefined, 2)}</pre> */}
         <Table striped bordered hover size="sm">
           <thead>
             <tr>
@@ -90,7 +113,7 @@ const AssignDeviceList = ({
             </tr>
           </thead>
           <tbody>
-            {sortedDevices.map((doc, index) => {
+            {filteredDevices.map((doc, index) => {
               return (
                 <tr key={doc.id}>
                   <td>{index + 1}</td>
@@ -98,13 +121,6 @@ const AssignDeviceList = ({
                   <td>{doc.selectuser}</td>
                   <td>{doc.status}</td>
                   <td>
-                    {/* <Button
-                      variant="secondary"
-                      className="edit"
-                      onClick={(e) => getAssignDeviceId(doc.id)}
-                    >
-                      Edit
-                    </Button> */}
                     <Button
                       variant="danger"
                       className="delete"

@@ -2,11 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button } from "react-bootstrap";
 import DeviceDataService from "../services/device.services";
+import { Form, Row, Col } from "react-bootstrap";
 
 const DeviceFormList = ({ getDeviceId }) => {
   const [devices, setDevices] = useState([]);
   const [sortBy, setSortBy] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
+  const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
     getDevices();
   }, []);
@@ -49,13 +51,37 @@ const DeviceFormList = ({ getDeviceId }) => {
     }
   });
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredDevices = sortedDevices.filter(
+    (device) =>
+      device.device.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      device.serial.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      device.status.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <>
-      <div className="mb-2">
-        <Button variant="dark edit" onClick={getDevices}>
-          Refresh List
-        </Button>
-      </div>
+      <Row className="mb-2">
+        <Col xs={8}>
+          <Button variant="dark edit" onClick={getDevices}>
+            Refresh List
+          </Button>
+        </Col>
+        <Col xs={4} className="d-flex justify-content-end">
+          <Form className="search-bar">
+            <Form.Control
+              type="text"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              size="sm" // Make the search input smaller
+            />
+          </Form>
+        </Col>
+      </Row>
       <div className="cont">
         {/* <pre>{JSON.stringify(devices, undefined, 2)}</pre> */}
         <Table striped bordered hover size="sm">
@@ -79,7 +105,7 @@ const DeviceFormList = ({ getDeviceId }) => {
             </tr>
           </thead>
           <tbody>
-            {sortedDevices.map((doc, index) => {
+            {filteredDevices.map((doc, index) => {
               return (
                 <tr key={doc.id}>
                   <td>{index + 1}</td>
