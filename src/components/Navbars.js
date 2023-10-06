@@ -9,7 +9,7 @@ export default function Navbars() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
-          <Nav.Link href="/">Device Form</Nav.Link>
+          <Nav.Link href="/devicepage">Device Form</Nav.Link>
           <Nav.Link href="/employeepage">Employee Details</Nav.Link>
           <Nav.Link href="/assignpage">Assign Device</Nav.Link>
         </Nav>

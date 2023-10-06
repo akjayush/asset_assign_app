@@ -10,7 +10,7 @@ import AssignDevice from "./components/AssignDevice";
 import EmployeeForm from "./components/EmployeeForm";
 import EmployeeFormList from "./components/EmployeeFormList";
 import AssignDeviceList from "./components/AssignDeviceList";
-
+import Login from "./components/Login";
 function App() {
   const [deviceId, setDeviceId] = useState("");
 
@@ -40,9 +40,11 @@ function App() {
     <>
       <Router>
         <Navbars />
-
+        <Route exact path="/">
+          <Login />
+        </Route>
         <Switch>
-          <Route exact path="/">
+          <Route exact path="/devicepage">
             <DeviceForm id={deviceId} setDeviceId={setDeviceId} />
             <Container>
               <Row>
