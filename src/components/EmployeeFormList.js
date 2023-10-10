@@ -63,7 +63,8 @@ const EmployeeFormList = ({ getEmployeeId }) => {
     (employee) =>
       employee.empid.toLowerCase().includes(searchQuery.toLowerCase()) ||
       employee.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      employee.email.toLowerCase().includes(searchQuery.toLowerCase())
+      employee.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      employee.number.toString().includes(searchQuery)
   );
 
   return (

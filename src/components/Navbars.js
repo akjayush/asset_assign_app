@@ -49,15 +49,17 @@ export default function Navbars() {
 
     return (
       <>
-        <Nav.Link href="/devicepage">Device Form</Nav.Link>
-        <Nav.Link href="/employeepage">Employee Details</Nav.Link>
-        <Nav.Link href="/assignpage">Assign Device</Nav.Link>
+        <Nav className="mr-auto">
+          <Nav.Link href="/devicepage">Device Form</Nav.Link>
+          <Nav.Link href="/employeepage">Employee Details</Nav.Link>
+          <Nav.Link href="/assignpage">Assign Device</Nav.Link>
+        </Nav>
 
-        <div className="ml-auto">
+        <Nav className="log">
           <Button onClick={handleLogout} variant="dark">
             Logout
           </Button>
-        </div>
+        </Nav>
       </>
     );
   };
