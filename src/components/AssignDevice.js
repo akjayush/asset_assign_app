@@ -130,7 +130,8 @@ const AssignDevice = ({
 
     let temps = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
     let outputs = temps.filter((item) => {
-      return !selectemployees.includes(item.email);
+      // return !selectemployees.includes(item.email);
+      return selectemployees;
     });
 
     setEmployees(outputs);

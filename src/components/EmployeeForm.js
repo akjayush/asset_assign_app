@@ -9,19 +9,25 @@ const EmployeeForm = ({ id, setEmployeeId }) => {
   const [empid, setEmpid] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
   const [message, setMessage] = useState({ error: false, msg: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
-    if (empid === "" || name === "" || email === "") {
+    if (empid === "" || name === "" || email === "" || number === "") {
       setMessage({ error: true, msg: "All fields are mandatory!" });
+      return;
+    }
+    if (number.length !== 10) {
+      setMessage({ error: true, msg: "Mobile number must be 10 digits long!" });
       return;
     }
     const newEmployee = {
       empid,
       name,
       email,
+      number,
     };
     console.log(newEmployee);
 
@@ -40,6 +46,7 @@ const EmployeeForm = ({ id, setEmployeeId }) => {
     setEmpid("");
     setName("");
     setEmail("");
+    setNumber("");
   };
 
   useEffect(() => {
@@ -62,6 +69,7 @@ const EmployeeForm = ({ id, setEmployeeId }) => {
       setEmpid(docSnap.data().empid);
       setName(docSnap.data().name);
       setEmail(docSnap.data().email);
+      setNumber(docSnap.data().number);
     } catch (err) {
       setMessage({ error: true, msg: err.message });
     }
@@ -116,6 +124,16 @@ const EmployeeForm = ({ id, setEmployeeId }) => {
               placeholder="Enter Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Mobile Number</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Enter Mobile Number"
+              value={number}
+              onChange={(e) => setNumber(e.target.value)}
             />
           </Form.Group>
 

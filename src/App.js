@@ -1,16 +1,68 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container, Navbar, Row, Col } from "react-bootstrap";
 import DeviceForm from "./components/DeviceForm";
 import DeviceFormList from "./components/DeviceFormList";
 import "./App.css";
 import Navbars from "./components/Navbars";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Redirect, useHistory, useLocation } from "react-router-dom";
 import AssignDevice from "./components/AssignDevice";
 import EmployeeForm from "./components/EmployeeForm";
 import EmployeeFormList from "./components/EmployeeFormList";
 import AssignDeviceList from "./components/AssignDeviceList";
 import Login from "./components/Login";
+import { signOut, onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase-config";
+
+const PrivateRoute = ({ children, ...rest }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // Initialize loading state
+  const history = useHistory();
+  const location = useLocation();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+      setLoading(false); // Set loading to false once Firebase auth is checked
+    });
+
+    return unsubscribe;
+  }, []);
+  // const Loader = () => {
+  //   return (
+  //     <div className="loader-containers">
+  //       <div className="loader"></div>
+  //     </div>
+  //   );
+  // };
+
+  if (loading) {
+    return;
+  }
+
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        user ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/",
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    />
+  );
+};
 function App() {
   const [deviceId, setDeviceId] = useState("");
 
@@ -45,7 +97,7 @@ function App() {
         </Route>
 
         <Switch>
-          <Route path="/devicepage">
+          <PrivateRoute path="/devicepage">
             <DeviceForm id={deviceId} setDeviceId={setDeviceId} />
             <Container>
               <Row>
@@ -54,8 +106,8 @@ function App() {
                 </Col>
               </Row>
             </Container>
-          </Route>
-          <Route path="/employeepage">
+          </PrivateRoute>
+          <PrivateRoute path="/employeepage">
             <EmployeeForm id={employeeId} setEmployeeId={setEmployeeId} />
             <Container>
               <Row>
@@ -64,8 +116,8 @@ function App() {
                 </Col>
               </Row>
             </Container>
-          </Route>
-          <Route path="/assignpage">
+          </PrivateRoute>
+          <PrivateRoute path="/assignpage">
             <AssignDevice
               id={assigndeviceId}
               setAssignDeviceId={setAssignDeviceId}
@@ -86,7 +138,7 @@ function App() {
               </Row>
             </Container>
             {/* <AssignDevice /> */}
-          </Route>
+          </PrivateRoute>
         </Switch>
       </Router>
     </>

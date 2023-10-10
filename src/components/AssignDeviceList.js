@@ -83,7 +83,7 @@ const AssignDeviceList = ({
               placeholder="Search"
               value={searchQuery}
               onChange={handleSearchChange}
-              size="sm" // Make the search input smaller
+              size="sm"
             />
           </Form>
         </Col>

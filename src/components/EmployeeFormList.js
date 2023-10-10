@@ -39,7 +39,12 @@ const EmployeeFormList = ({ getEmployeeId }) => {
   };
 
   const sortedEmployees = [...employees].sort((a, b) => {
-    if (sortBy === "empid" || sortBy === "name" || sortBy === "email") {
+    if (
+      sortBy === "empid" ||
+      sortBy === "name" ||
+      sortBy === "email" ||
+      sortBy === "number"
+    ) {
       return sortOrder === "asc"
         ? a[sortBy].localeCompare(b[sortBy])
         : b[sortBy].localeCompare(a[sortBy]);
@@ -95,8 +100,13 @@ const EmployeeFormList = ({ getEmployeeId }) => {
                 {sortBy === "name" && sortOrder === "desc" && "▼"}
               </th>
               <th onClick={() => handleSort("email")}>
-                Gmail {sortBy === "email" && sortOrder === "asc" && "▲"}
+                Email {sortBy === "email" && sortOrder === "asc" && "▲"}
                 {sortBy === "email" && sortOrder === "desc" && "▼"}
+              </th>
+              <th onClick={() => handleSort("number")}>
+                Mobile Number{" "}
+                {sortBy === "number" && sortOrder === "asc" && "▲"}
+                {sortBy === "number" && sortOrder === "desc" && "▼"}
               </th>
               <th>Action</th>
             </tr>
@@ -109,6 +119,7 @@ const EmployeeFormList = ({ getEmployeeId }) => {
                   <td>{employee.empid}</td>
                   <td>{employee.name}</td>
                   <td>{employee.email}</td>
+                  <td>{employee.number}</td>
                   <td>
                     <Button
                       variant="secondary"
