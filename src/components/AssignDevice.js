@@ -39,6 +39,15 @@ const AssignDevice = ({
       } else {
         await AssignDeviceDataService.addAssignDevices(newassignDevice);
         setMessage({ error: false, msg: "Assigned successfully" });
+
+        const updatedDevices = [...devices];
+        const deviceIndex = updatedDevices.findIndex(
+          (device) => device.serial === selectdevice
+        );
+        if (deviceIndex !== -1) {
+          updatedDevices[deviceIndex].status = selectuser;
+          setDevices(updatedDevices);
+        }
       }
     } catch (err) {
       setMessage({
@@ -46,6 +55,7 @@ const AssignDevice = ({
         msg: "An error occurred while saving the data.",
       });
     }
+
     setselectDevice("");
     setselectUser("");
   };

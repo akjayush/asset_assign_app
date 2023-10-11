@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Button } from "react-bootstrap";
 import DeviceDataService from "../services/device.services";
 import { Form, Row, Col } from "react-bootstrap";
-
+import AssignDeviceDataService from "../services/assign.services";
 const DeviceFormList = ({ getDeviceId }) => {
   const [devices, setDevices] = useState([]);
   const [sortBy, setSortBy] = useState("");
@@ -14,9 +14,30 @@ const DeviceFormList = ({ getDeviceId }) => {
   }, []);
 
   const getDevices = async () => {
-    const data = await DeviceDataService.getAllDevices();
-    console.log(data.docs);
-    setDevices(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    const deviceData = await DeviceDataService.getAllDevices();
+    const assignData = await AssignDeviceDataService.getAllAssignDevices();
+
+    const assignedDevices = assignData.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+
+    const updatedDevices = deviceData.docs.map((doc) => {
+      const assignedDevice = assignedDevices.find(
+        (assigned) => assigned.selectdevice === doc.data().serial
+      );
+      if (assignedDevice) {
+        return {
+          ...doc.data(),
+          id: doc.id,
+          status: assignedDevice.selectuser,
+        };
+      } else {
+        return { ...doc.data(), id: doc.id };
+      }
+    });
+
+    setDevices(updatedDevices);
   };
 
   const deleteHandler = async (id) => {
