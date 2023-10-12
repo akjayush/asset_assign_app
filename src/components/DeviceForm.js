@@ -8,7 +8,7 @@ import { Form, Alert, Button, ButtonGroup } from "react-bootstrap";
 const DeviceForm = ({ id, setDeviceId }) => {
   const [device, setDevice] = useState("");
   const [serial, setSerial] = useState("");
-  const [status, setStatus] = useState("Assigned");
+  const [status, setStatus] = useState("Not Assigned");
   const [flag, setFlag] = useState(true);
   const [message, setMessage] = useState({ error: false, msg: "" });
 
@@ -108,7 +108,7 @@ const DeviceForm = ({ id, setDeviceId }) => {
           </Form.Group>
 
           <ButtonGroup aria-label="Basic example" className="mb-3">
-            <Button
+            {/* <Button
               disabled={flag}
               variant="success"
               onClick={(e) => {
@@ -117,7 +117,7 @@ const DeviceForm = ({ id, setDeviceId }) => {
               }}
             >
               Assigned
-            </Button>
+            </Button> */}
             <Button
               variant="danger"
               disabled={!flag}

@@ -119,7 +119,7 @@ const DeviceFormList = ({ getDeviceId }) => {
                 {sortBy === "serial" && sortOrder === "desc" && "▼"}
               </th>
               <th onClick={() => handleSort("status")}>
-                Status {sortBy === "status" && sortOrder === "asc" && "▲"}
+                Assigned to {sortBy === "status" && sortOrder === "asc" && "▲"}
                 {sortBy === "status" && sortOrder === "desc" && "▼"}
               </th>
               <th>Action</th>

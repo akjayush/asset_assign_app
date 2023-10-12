@@ -208,7 +208,7 @@ const AssignDevice = ({
               >
                 Assigned
               </Button>
-              <Button
+              {/* <Button
                 variant="danger"
                 disabled={!flag}
                 onClick={(e) => {
@@ -217,7 +217,7 @@ const AssignDevice = ({
                 }}
               >
                 Not Assigned
-              </Button>
+              </Button> */}
             </ButtonGroup>
           </Form.Group>
           <div className="d-grid gap-2">
