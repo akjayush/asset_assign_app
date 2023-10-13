@@ -5,16 +5,19 @@ import Spinner from "react-bootstrap/Spinner";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase-config";
 import { useHistory } from "react-router-dom";
+import { Alert } from "react-bootstrap";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const history = useHistory();
 
   const signIn = (e) => {
     e.preventDefault();
     setLoading(true);
+    setError(""); // Clear any previous error messages
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -28,6 +31,12 @@ const Login = () => {
       .catch((error) => {
         console.log(error);
         setLoading(false);
+        setError("Wrong email or password. Please try again."); // Set error message
+
+        // Clear the error message after 2 seconds (2000 milliseconds)
+        setTimeout(() => {
+          setError("");
+        }, 1500);
       });
   };
 
@@ -44,6 +53,8 @@ const Login = () => {
       )}
       <div className="container">
         <Form onSubmit={signIn}>
+          {/* ... (your form inputs and button) */}
+          {error && <div className="text-danger">{error}</div>}
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email </Form.Label>
             <Form.Control

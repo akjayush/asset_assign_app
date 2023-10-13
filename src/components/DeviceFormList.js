@@ -9,19 +9,21 @@ const DeviceFormList = ({ getDeviceId }) => {
   const [sortBy, setSortBy] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
   const [searchQuery, setSearchQuery] = useState("");
+
   useEffect(() => {
     getDevices();
   }, []);
 
   const getDevices = async () => {
+    // Fetch devices and assignments
     const deviceData = await DeviceDataService.getAllDevices();
     const assignData = await AssignDeviceDataService.getAllAssignDevices();
-
     const assignedDevices = assignData.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
     }));
 
+    // Combine device data with assignment status
     const updatedDevices = deviceData.docs.map((doc) => {
       const assignedDevice = assignedDevices.find(
         (assigned) => assigned.selectdevice === doc.data().serial
@@ -33,21 +35,37 @@ const DeviceFormList = ({ getDeviceId }) => {
           status: assignedDevice.selectuser,
         };
       } else {
-        return { ...doc.data(), id: doc.id };
+        return { ...doc.data(), id: doc.id, status: "Not Assigned" };
       }
     });
 
     setDevices(updatedDevices);
   };
 
-  const deleteHandler = async (id) => {
-    const shouldDelete = window.confirm(
-      "Are you sure you want to delete this device?"
-    );
+  const deleteHandler = async (id, status) => {
+    if (status === "Not Assigned") {
+      const shouldDelete = window.confirm(
+        "Are you sure you want to delete this device?"
+      );
 
-    if (shouldDelete) {
-      await DeviceDataService.deleteDoc(id);
-      getDevices();
+      if (shouldDelete) {
+        await DeviceDataService.deleteDoc(id);
+        getDevices();
+      }
+    } else {
+      alert(
+        "You cannot delete an assigned device. Remove it from the Assign Device first."
+      );
+    }
+  };
+
+  const handleEdit = (id, status) => {
+    if (status === "Not Assigned") {
+      getDeviceId(id); // Allow editing only for devices that are "Not Assigned"
+    } else {
+      alert(
+        "You cannot edit an assigned device. Remove it from the Assign Device first."
+      );
     }
   };
 
@@ -137,14 +155,14 @@ const DeviceFormList = ({ getDeviceId }) => {
                     <Button
                       variant="secondary"
                       className="edit"
-                      onClick={(e) => getDeviceId(doc.id)}
+                      onClick={() => handleEdit(doc.id, doc.status)}
                     >
                       Edit
                     </Button>
                     <Button
                       variant="danger"
                       className="delete"
-                      onClick={(e) => deleteHandler(doc.id)}
+                      onClick={() => deleteHandler(doc.id, doc.status)}
                     >
                       Delete
                     </Button>
