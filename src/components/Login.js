@@ -53,8 +53,7 @@ const Login = () => {
       )}
       <div className="container">
         <Form onSubmit={signIn}>
-          {/* ... (your form inputs and button) */}
-          {error && <div className="text-danger">{error}</div>}
+          {error && <Alert className="text-danger">{error}</Alert>}
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email </Form.Label>
             <Form.Control
