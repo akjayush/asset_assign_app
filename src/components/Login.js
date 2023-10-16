@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
@@ -6,13 +6,25 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase-config";
 import { useHistory } from "react-router-dom";
 import { Alert } from "react-bootstrap";
-
+import { onAuthStateChanged } from "firebase/auth";
+import { Redirect } from "react-router-dom";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const history = useHistory();
+  const [authenticated, setAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setAuthenticated(true);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const signIn = (e) => {
     e.preventDefault();
@@ -39,6 +51,10 @@ const Login = () => {
         }, 1500);
       });
   };
+
+  if (authenticated) {
+    return <Redirect to="/devicepage" />;
+  }
 
   return (
     <>
