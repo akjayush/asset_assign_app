@@ -29,7 +29,7 @@ const Login = () => {
   const signIn = (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(""); // Clear any previous error messages
+    setError("");
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -43,9 +43,8 @@ const Login = () => {
       .catch((error) => {
         console.log(error);
         setLoading(false);
-        setError("Wrong email or password. Please try again."); // Set error message
+        setError("Wrong email or password. Please try again.");
 
-        // Clear the error message after 2 seconds (2000 milliseconds)
         setTimeout(() => {
           setError("");
         }, 1500);
