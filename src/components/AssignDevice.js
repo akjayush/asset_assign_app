@@ -52,13 +52,12 @@ const AssignDevice = ({
     } catch (err) {
       setMessage({
         error: true,
-        msg: "An error occurred while saving the data.",
+        msg: "All fields are mandatory!",
       });
     }
 
     setselectDevice("");
     setselectUser("");
-    window.location.reload();
   };
 
   useEffect(() => {
