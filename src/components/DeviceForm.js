@@ -40,6 +40,7 @@ const DeviceForm = ({ id, setDeviceId }) => {
     }
     setDevice("");
     setSerial("");
+    window.location.reload();
   };
 
   useEffect(() => {

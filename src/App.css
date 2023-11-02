@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  
 }
 
 .App-logo {
@@ -187,3 +188,15 @@ h1 {
     
     margin-left: 1300px;;
 } */
+.white-toggle {
+  background-color: white;
+  color: black;
+  /* Change the color of the toggle icon if needed */
+}
+
+.login-background {
+  background: linear-gradient(45deg, #800080, #ffaa00,#ff0000);
+  height: 100vh;
+  /* Adjust the height to fit your layout */
+  
+}

@@ -47,6 +47,7 @@ const EmployeeForm = ({ id, setEmployeeId }) => {
     setName("");
     setEmail("");
     setNumber("");
+    window.location.reload();
   };
 
   useEffect(() => {

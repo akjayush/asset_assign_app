@@ -90,57 +90,59 @@ function App() {
 
   return (
     <>
-      <Router>
-        <Navbars />
-        <Route exact path="/">
-          <Login />
-        </Route>
+      <div className="login-background">
+        <Router>
+          <Navbars />
+          <Route exact path="/">
+            <Login />
+          </Route>
 
-        <Switch>
-          <PrivateRoute path="/devicepage">
-            <DeviceForm id={deviceId} setDeviceId={setDeviceId} />
-            <Container>
-              <Row>
-                <Col>
-                  <DeviceFormList getDeviceId={getDeviceIdHandler} />
-                </Col>
-              </Row>
-            </Container>
-          </PrivateRoute>
-          <PrivateRoute path="/employeepage">
-            <EmployeeForm id={employeeId} setEmployeeId={setEmployeeId} />
-            <Container>
-              <Row>
-                <Col>
-                  <EmployeeFormList getEmployeeId={getEmployeeIdHandler} />
-                </Col>
-              </Row>
-            </Container>
-          </PrivateRoute>
-          <PrivateRoute path="/assignpage">
-            <AssignDevice
-              id={assigndeviceId}
-              setAssignDeviceId={setAssignDeviceId}
-              assigndevices={assigndevices}
-              // assignemployess={assignemployess}
-            />
-            <Container>
-              <Row>
-                <Col>
-                  <AssignDeviceList
-                    assigndevices={assigndevices}
-                    // assignemployess={assignemployess}
-                    // setassignEmployess={setassignEmployess}
-                    setassignDevices={setassignDevices}
-                    getAssignDeviceId={getAssignDeviceIdHandler}
-                  />
-                </Col>
-              </Row>
-            </Container>
-            {/* <AssignDevice /> */}
-          </PrivateRoute>
-        </Switch>
-      </Router>
+          <Switch>
+            <PrivateRoute path="/devicepage">
+              <DeviceForm id={deviceId} setDeviceId={setDeviceId} />
+              <Container>
+                <Row>
+                  <Col>
+                    <DeviceFormList getDeviceId={getDeviceIdHandler} />
+                  </Col>
+                </Row>
+              </Container>
+            </PrivateRoute>
+            <PrivateRoute path="/employeepage">
+              <EmployeeForm id={employeeId} setEmployeeId={setEmployeeId} />
+              <Container>
+                <Row>
+                  <Col>
+                    <EmployeeFormList getEmployeeId={getEmployeeIdHandler} />
+                  </Col>
+                </Row>
+              </Container>
+            </PrivateRoute>
+            <PrivateRoute path="/assignpage">
+              <AssignDevice
+                id={assigndeviceId}
+                setAssignDeviceId={setAssignDeviceId}
+                assigndevices={assigndevices}
+                // assignemployess={assignemployess}
+              />
+              <Container>
+                <Row>
+                  <Col>
+                    <AssignDeviceList
+                      assigndevices={assigndevices}
+                      // assignemployess={assignemployess}
+                      // setassignEmployess={setassignEmployess}
+                      setassignDevices={setassignDevices}
+                      getAssignDeviceId={getAssignDeviceIdHandler}
+                    />
+                  </Col>
+                </Row>
+              </Container>
+              {/* <AssignDevice /> */}
+            </PrivateRoute>
+          </Switch>
+        </Router>
+      </div>
     </>
   );
 }

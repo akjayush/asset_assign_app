@@ -58,6 +58,7 @@ const AssignDevice = ({
 
     setselectDevice("");
     setselectUser("");
+    window.location.reload();
   };
 
   useEffect(() => {

@@ -102,7 +102,7 @@ export default function Navbars() {
           <Button
             onClick={handleLogout}
             variant="danger"
-            style={{ marginLeft: "30px" }}
+            style={{ marginLeft: "20px" }}
           >
             Logout
           </Button>
@@ -117,9 +117,7 @@ export default function Navbars() {
         <div className="loading-overlay">
           <div className="loader-container">
             <div className="loader">
-              <Spinner animation="border" role="status" variant="red">
-                <span className="visually-hidden">Logging Out...</span>
-              </Spinner>
+              <span className="visually-hidden">Logging Out...</span>
             </div>
           </div>
         </div>
@@ -127,15 +125,29 @@ export default function Navbars() {
 
       <div className="navbar-container ">
         <Navbar expand="lg" className="bg-dark">
-          <Navbar.Brand style={{ color: "white" }}>Asset Assign </Navbar.Brand>
+          <Navbar.Brand
+            style={{
+              color: "white",
+              marginLeft: "6px",
+              marginTop: "-7px",
+              fontSize: "24px",
+            }}
+          >
+            Asset Assign{" "}
+          </Navbar.Brand>
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
-            style={{ borderColor: "white", color: "white" }}
+            className="white-toggle"
           />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">{renderNavLinks()}</Nav>
           </Navbar.Collapse>
-          <img src={sopralogo} alt="Your Logo" className="logo ml-auto" />
+          <img
+            src={sopralogo}
+            alt="Your Logo"
+            className="logo ml-auto"
+            style={{ marginRight: "8px", marginTop: "-5px" }}
+          />
         </Navbar>
       </div>
 
