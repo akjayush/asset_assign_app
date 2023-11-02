@@ -8,6 +8,7 @@ import { Link, useHistory } from "react-router-dom";
 import { auth } from "../firebase-config";
 import Spinner from "react-bootstrap/Spinner";
 import { useLocation } from "react-router-dom";
+import sopralogo from "./sopralogo.png";
 
 export default function Navbars() {
   const history = useHistory();
@@ -50,13 +51,59 @@ export default function Navbars() {
     return (
       <>
         <Nav className="mr-auto">
-          <Nav.Link href="/devicepage">Device Form</Nav.Link>
-          <Nav.Link href="/employeepage">Employee Details</Nav.Link>
-          <Nav.Link href="/assignpage">Assign Device</Nav.Link>
+          <Nav.Link
+            href="/devicepage"
+            style={{
+              color: "white",
+              textDecoration: "none",
+              marginRight: "15px",
+              padding: "5px 0",
+              borderBottom:
+                location.pathname === "/devicepage"
+                  ? "2px solid yellow"
+                  : "none",
+            }}
+          >
+            Device Form
+          </Nav.Link>
+          <Nav.Link
+            href="/employeepage"
+            style={{
+              color: "white",
+              textDecoration: "none",
+              marginRight: "15px",
+              padding: "5px 0",
+              borderBottom:
+                location.pathname === "/employeepage"
+                  ? "2px solid yellow"
+                  : "none",
+            }}
+          >
+            Employee Details
+          </Nav.Link>
+          <Nav.Link
+            href="/assignpage"
+            style={{
+              color: "white",
+              textDecoration: "none",
+              padding: "5px 0",
+              borderBottom:
+                location.pathname === "/assignpage"
+                  ? "2px solid yellow"
+                  : "none",
+            }}
+          >
+            Assign Device
+          </Nav.Link>
         </Nav>
 
-        <Nav className="log">
-          <Button onClick={handleLogout} variant="dark">
+        <Nav className="log ms-auto">
+          {" "}
+          <Button
+            onClick={handleLogout}
+            variant="danger"
+            style={{ marginLeft: "30px" }}
+          >
             Logout
           </Button>
         </Nav>
@@ -78,13 +125,17 @@ export default function Navbars() {
         </div>
       )}
 
-      <div className="navbar-container">
-        <Navbar expand="lg" className="bg-body-tertiary">
-          <Navbar.Brand>Asset Assign App</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <div className="navbar-container ">
+        <Navbar expand="lg" className="bg-dark">
+          <Navbar.Brand style={{ color: "white" }}>Asset Assign </Navbar.Brand>
+          <Navbar.Toggle
+            aria-controls="basic-navbar-nav"
+            style={{ borderColor: "white", color: "white" }}
+          />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">{renderNavLinks()}</Nav>
           </Navbar.Collapse>
+          <img src={sopralogo} alt="Your Logo" className="logo ml-auto" />
         </Navbar>
       </div>
 
