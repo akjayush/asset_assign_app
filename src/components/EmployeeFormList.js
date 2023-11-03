@@ -87,7 +87,7 @@ const EmployeeFormList = ({ getEmployeeId }) => {
           </Form>
         </Col>
       </Row>
-      <div className="cont">
+      <div className="cont-employee">
         <Table striped bordered hover size="sm">
           <thead>
             <tr>

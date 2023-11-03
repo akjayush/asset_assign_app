@@ -49,6 +49,7 @@ const AssignDevice = ({
           setDevices(updatedDevices);
         }
       }
+      window.location.reload();
     } catch (err) {
       setMessage({
         error: true,

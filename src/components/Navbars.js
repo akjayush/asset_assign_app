@@ -13,7 +13,7 @@ import sopralogo from "./sopralogo.png";
 export default function Navbars() {
   const history = useHistory();
   const location = useLocation();
-  const [loggingOut, setLoggingOut] = useState(false);
+  const [loadingNavigation, setLoadingNavigation] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const handleLogout = () => {
@@ -23,7 +23,7 @@ export default function Navbars() {
   const confirmLogout = () => {
     setShowLogoutModal(false);
 
-    setLoggingOut(true);
+    setLoadingNavigation(true);
 
     signOut(auth)
       .then(() => {
@@ -37,11 +37,19 @@ export default function Navbars() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setLoggingOut(false);
+      setLoadingNavigation(false);
     }, 1000);
 
     return () => clearTimeout(timeout);
   }, []);
+
+  const handleNavLinkClick = () => {
+    setLoadingNavigation(true);
+
+    setTimeout(() => {
+      setLoadingNavigation(false);
+    }, 1000);
+  };
 
   const renderNavLinks = () => {
     if (location.pathname === "/") {
@@ -63,6 +71,7 @@ export default function Navbars() {
                   ? "2px solid yellow"
                   : "none",
             }}
+            onClick={handleNavLinkClick} // Add the click handler for navigation links
           >
             Device Form
           </Nav.Link>
@@ -78,6 +87,7 @@ export default function Navbars() {
                   ? "2px solid yellow"
                   : "none",
             }}
+            onClick={handleNavLinkClick} // Add the click handler for navigation links
           >
             Employee Details
           </Nav.Link>
@@ -92,6 +102,7 @@ export default function Navbars() {
                   ? "2px solid yellow"
                   : "none",
             }}
+            onClick={handleNavLinkClick} // Add the click handler for navigation links
           >
             Assign Device
           </Nav.Link>
@@ -113,11 +124,11 @@ export default function Navbars() {
 
   return (
     <>
-      {loggingOut && (
+      {loadingNavigation && (
         <div className="loading-overlay">
           <div className="loader-container">
             <div className="loader">
-              <span className="visually-hidden">Logging Out...</span>
+              <span className="visually-hidden">Loading...</span>
             </div>
           </div>
         </div>
