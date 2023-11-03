@@ -44,6 +44,8 @@
   border: #C8C8C8 1px solid;
   border-radius: 7px;
   padding-bottom: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .header {
@@ -69,20 +71,8 @@ table {
 h1 {
   text-decoration: underline;
 }
-.container {
-  margin-top: 30px;
-  padding-top: 10px;
-  border: #C8C8C8 1px solid;
-  border-radius: 7px;
-  padding-bottom: 10px;
-}
 
-.header {
-  background-color: black;
-  color: aliceblue;
-  text-align: center;
-  padding: 9px;
-}
+
 
 .cont {
   overflow: scroll;
@@ -194,9 +184,8 @@ h1 {
   /* Change the color of the toggle icon if needed */
 }
 
-.login-background {
-  background: linear-gradient(45deg, #800080, #ffaa00,#ff0000);
-  height: 100vh;
-  /* Adjust the height to fit your layout */
-  
+body {
+  background: rgb(240, 125, 0);
+  background: linear-gradient(90deg, rgba(240, 125, 0, 1) 0%, rgba(207, 2, 43, 1) 45%, rgba(139, 29, 130, 1) 80%, rgba(77, 29, 130, 1) 100%);
+
 }
