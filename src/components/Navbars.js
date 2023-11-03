@@ -4,9 +4,8 @@ import Navbar from "react-bootstrap/Navbar";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { signOut } from "firebase/auth";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { auth } from "../firebase-config";
-import Spinner from "react-bootstrap/Spinner";
 import { useLocation } from "react-router-dom";
 import sopralogo from "./sopralogo.png";
 

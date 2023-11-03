@@ -200,7 +200,7 @@ const AssignDevice = ({
             <br />
             <ButtonGroup aria-label="Basic example" className="mb-3">
               <Button
-                disabled={flag}
+                disabled={!flag}
                 variant="success"
                 onClick={(e) => {
                   setStatus("Assigned");
