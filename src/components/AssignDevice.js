@@ -151,7 +151,7 @@ const AssignDevice = ({
   return (
     <>
       <div className="container">
-        <h1>Assign Device</h1>
+        {/* <h1>Assign Device</h1> */}
         {message?.msg && (
           <Alert
             variant={message?.error ? "danger" : "success"}

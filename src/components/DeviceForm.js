@@ -77,7 +77,7 @@ const DeviceForm = ({ id, setDeviceId }) => {
   return (
     <>
       <div className="container">
-        <h1>Device Form</h1>
+        {/* <h1>Device Form</h1> */}
         {message?.msg && (
           <Alert
             variant={message?.error ? "danger" : "success"}
