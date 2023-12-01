@@ -85,7 +85,7 @@ const EmployeeForm = ({ id, setEmployeeId }) => {
 
   return (
     <>
-      <div className="container">
+      <div className="container bold-text">
         {/* <h1>Employee Details</h1> */}
 
         {message?.msg && (

@@ -76,7 +76,7 @@ const DeviceForm = ({ id, setDeviceId }) => {
 
   return (
     <>
-      <div className="container">
+      <div className="container bold-text">
         {/* <h1>Device Form</h1> */}
         {message?.msg && (
           <Alert

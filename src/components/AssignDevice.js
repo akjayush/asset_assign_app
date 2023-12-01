@@ -150,7 +150,7 @@ const AssignDevice = ({
 
   return (
     <>
-      <div className="container">
+      <div className="container bold-text">
         {/* <h1>Assign Device</h1> */}
         {message?.msg && (
           <Alert
