@@ -3,13 +3,12 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 const firebaseConfig = {
-  apiKey: "AIzaSyAyA_bzkirptScijyB12pIPk4Uir67f6wQ",
-  authDomain: "device-form.firebaseapp.com",
-  projectId: "device-form",
-  storageBucket: "device-form.appspot.com",
-  messagingSenderId: "554415645114",
-  appId: "1:554415645114:web:b3282a2ef6e984d9eafd83",
-  measurementId: "G-WNQHZMVF4X",
+  apiKey: "AIzaSyDes2Zkgirkk0tXSoT1R4iaEIZl-cCUqMA",
+  authDomain: "inventory-management-939b3.firebaseapp.com",
+  projectId: "inventory-management-939b3",
+  storageBucket: "inventory-management-939b3.appspot.com",
+  messagingSenderId: "207321633039",
+  appId: "1:207321633039:web:dd028ae68c7e7ea020ee7a",
 };
 
 // Initialize Firebase

@@ -152,17 +152,13 @@ export default function Navbars() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">{renderNavLinks()}</Nav>
           </Navbar.Collapse>
-          <a
-            href="https://steria.sharepoint.com/sites/intra_ssg_in"
-            target="_blank"
-          >
-            <img
-              src={sopralogo}
-              alt="Your Logo"
-              className="logo ml-auto"
-              style={{ marginRight: "8px", marginTop: "-5px" }}
-            />
-          </a>
+
+          <img
+            src={sopralogo}
+            alt="Your Logo"
+            className="logo ml-auto"
+            style={{ marginRight: "8px", marginTop: "-5px" }}
+          />
         </Navbar>
       </div>
 
