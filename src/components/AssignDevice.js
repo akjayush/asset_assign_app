@@ -181,8 +181,12 @@ const AssignDevice = ({
                 </Button>
               </ButtonGroup>
             </Form.Group>
-            <div className="d-grid gap-2">
-              <Button variant="primary" type="Submit">
+            <div className="d-grid gap-2 blue-buttons">
+              <Button
+                variant="primary"
+                type="Submit"
+                style={{ fontWeight: "650" }}
+              >
                 Assign Device
               </Button>
             </div>
