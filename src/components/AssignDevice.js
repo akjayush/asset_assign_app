@@ -1,8 +1,10 @@
+// Import statements...
 import React, { useEffect, useState } from "react";
 import { Form, Alert, Button, ButtonGroup } from "react-bootstrap";
 import DeviceDataService from "../services/device.services";
 import EmployeeDataService from "../services/employee.service";
 import AssignDeviceDataService from "../services/assign.services";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const AssignDevice = ({
   getDeviceId,
@@ -11,8 +13,23 @@ const AssignDevice = ({
   setAssignDeviceId,
   assigndevices,
 }) => {
-  const [selectdevice, setselectDevice] = useState();
-  const [selectuser, setselectUser] = useState();
+  const [loggedInUserEmail, setLoggedInUserEmail] = useState(null);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setLoggedInUserEmail(user.email);
+      } else {
+        setLoggedInUserEmail(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const [selectdevice, setSelectDevice] = useState("");
+  const [selectuser, setSelectUser] = useState("");
   const [status, setStatus] = useState("Assigned");
   const [flag, setFlag] = useState(true);
   const [message, setMessage] = useState({ error: false, msg: "" });
@@ -24,41 +41,32 @@ const AssignDevice = ({
       setMessage({ error: true, msg: "All fields are mandatory!" });
       return;
     }
-    const newassignDevice = {
+
+    const newAssignDevice = {
       selectdevice,
       selectuser,
       status,
     };
-    console.log(newassignDevice);
 
     try {
       if (id !== undefined && id !== "") {
-        await AssignDeviceDataService.updateAssignDevice(id, newassignDevice);
+        await AssignDeviceDataService.updateAssignDevice(id, newAssignDevice);
         setAssignDeviceId("");
         setMessage({ error: false, msg: "Updated successfully" });
       } else {
-        await AssignDeviceDataService.addAssignDevices(newassignDevice);
+        await AssignDeviceDataService.addAssignDevices(newAssignDevice);
         setMessage({ error: false, msg: "Assigned successfully" });
-
-        const updatedDevices = [...devices];
-        const deviceIndex = updatedDevices.findIndex(
-          (device) => device.serial === selectdevice
-        );
-        if (deviceIndex !== -1) {
-          updatedDevices[deviceIndex].status = selectuser;
-          setDevices(updatedDevices);
-        }
       }
       window.location.reload();
     } catch (err) {
       setMessage({
         error: true,
-        msg: "All fields are mandatory!",
+        msg: "Error processing request.",
       });
     }
 
-    setselectDevice("");
-    setselectUser("");
+    setSelectDevice("");
+    setSelectUser("");
   };
 
   useEffect(() => {
@@ -77,27 +85,21 @@ const AssignDevice = ({
     setMessage("");
     try {
       const docSnap = await AssignDeviceDataService.getAssignDevice(id);
-      console.log("the record is :", docSnap.data());
-      setselectDevice(docSnap.data().selectdevice);
-      setselectUser(docSnap.data().selectuser);
+      setSelectDevice(docSnap.data().selectdevice);
+      setSelectUser(docSnap.data().selectuser);
     } catch (err) {
       setMessage({ error: true, msg: err.message });
     }
   };
 
   useEffect(() => {
-    console.log("The id here is : ", id);
     if (id !== undefined && id !== "") {
       editHandler();
     }
   }, [id]);
 
   const [devices, setDevices] = useState([]);
-
-  useEffect(() => {
-    getDevices();
-    getEmployees();
-  }, []);
+  const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
     getDevices();
@@ -106,128 +108,87 @@ const AssignDevice = ({
 
   const getDevices = async () => {
     const data = await DeviceDataService.getAllDevices();
-    console.log(data.docs);
-
     const selectdevices = assigndevices.map((item) => item.selectdevice);
-
     let temp = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    let output = temp.filter((item) => {
-      return !selectdevices.includes(item.serial);
-    });
-    console.log("SELECTdevics", selectdevices);
-    // console.log("TEMP", temp);
-    // console.log("OUTPUT", output);
+    let output = temp.filter((item) => !selectdevices.includes(item.serial));
     setDevices(output);
   };
-  console.log("SETDEVICES", setDevices);
-
-  const [employees, setEmployees] = useState([]);
-
-  useEffect(() => {
-    getDevices();
-    getEmployees();
-  }, []);
-
-  useEffect(() => {
-    getDevices();
-    getEmployees();
-  }, [assigndevices]);
 
   const getEmployees = async () => {
     const data = await EmployeeDataService.getAllEmployees();
-    console.log(data.docs);
-
     const selectemployees = assigndevices.map((item) => item.selectuser);
-
     let temps = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    let outputs = temps.filter((item) => {
-      // return !selectemployees.includes(item.email);
-      return selectemployees;
-    });
-
+    let outputs = temps.filter((item) => selectemployees);
     setEmployees(outputs);
   };
 
   return (
     <>
-      <div className="container bold-text">
-        {/* <h1>Assign Device</h1> */}
-        {message?.msg && (
-          <Alert
-            variant={message?.error ? "danger" : "success"}
-            dismissible
-            onClose={() => setMessage("")}
-          >
-            {message?.msg}
-          </Alert>
-        )}
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formBasicEmployee">
-            <Form.Label>Select Device</Form.Label>
-
-            <Form.Select
-              aria-label="Default select example"
-              value={selectdevice}
-              onChange={(e) => setselectDevice(e.target.value)}
+      {loggedInUserEmail !== "admin@soprasteria.com" ? null : (
+        <div className="container bold-text">
+          {message?.msg && (
+            <Alert
+              variant={message?.error ? "danger" : "success"}
+              dismissible
+              onClose={() => setMessage("")}
             >
-              <option key="blankChoice" hidden value>
-                {" "}
-                Open this select menu{" "}
-              </option>
-
-              {devices.map((doc, index) => (
-                <option>{doc.serial}</option>
-              ))}
-            </Form.Select>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmployee">
-            <Form.Label>Select User</Form.Label>
-
-            <Form.Select
-              aria-label="Default select example"
-              value={selectuser}
-              onChange={(e) => setselectUser(e.target.value)}
-            >
-              <option key="blankChoice" hidden value>
-                {" "}
-                Open this select menu{" "}
-              </option>
-
-              {employees.map((doc, index) => (
-                <option>{doc.email}</option>
-              ))}
-            </Form.Select>
-            <br />
-            <ButtonGroup aria-label="Basic example" className="mb-3">
-              <Button
-                disabled={!flag}
-                variant="success"
-                onClick={(e) => {
-                  setStatus("Assigned");
-                  setFlag(true);
-                }}
+              {message?.msg}
+            </Alert>
+          )}
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formBasicEmployee">
+              <Form.Label>Select Device</Form.Label>
+              <Form.Select
+                aria-label="Default select example"
+                value={selectdevice}
+                onChange={(e) => setSelectDevice(e.target.value)}
               >
-                Assigned
+                <option key="blankChoice" hidden value>
+                  {" "}
+                  Open this select menu{" "}
+                </option>
+                {devices.map((doc, index) => (
+                  <option key={index}>{doc.serial}</option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmployee">
+              <Form.Label>Select User</Form.Label>
+              <Form.Select
+                aria-label="Default select example"
+                value={selectuser}
+                onChange={(e) => setSelectUser(e.target.value)}
+              >
+                <option key="blankChoice" hidden value>
+                  {" "}
+                  Open this select menu{" "}
+                </option>
+                {employees.map((doc, index) => (
+                  <option key={index}>{doc.email}</option>
+                ))}
+              </Form.Select>
+              <br />
+              <ButtonGroup aria-label="Basic example" className="mb-3">
+                <Button
+                  disabled={!flag}
+                  variant="success"
+                  onClick={() => {
+                    setStatus("Assigned");
+                    setFlag(true);
+                  }}
+                >
+                  Assigned
+                </Button>
+              </ButtonGroup>
+            </Form.Group>
+            <div className="d-grid gap-2">
+              <Button variant="primary" type="Submit">
+                Assign Device
               </Button>
-              {/* <Button
-                variant="danger"
-                disabled={!flag}
-                onClick={(e) => {
-                  setStatus("Not Assigned");
-                  setFlag(false);
-                }}
-              >
-                Not Assigned
-              </Button> */}
-            </ButtonGroup>
-          </Form.Group>
-          <div className="d-grid gap-2">
-            <Button variant="primary" type="Submit">
-              Assign Device
-            </Button>
-          </div>
-        </Form>
-      </div>
+            </div>
+          </Form>
+        </div>
+      )}
     </>
   );
 };

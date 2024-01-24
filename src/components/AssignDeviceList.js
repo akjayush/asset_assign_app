@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button, Form, Row, Col } from "react-bootstrap";
 import AssignDeviceDataService from "../services/assign.services";
+import { auth } from "../firebase-config";
 
 const AssignDeviceList = ({
   getAssignDeviceId,
@@ -68,6 +69,11 @@ const AssignDeviceList = ({
       device.status.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const isAuthorizedUser = () => {
+    // Check if the logged-in user's email matches the specified email
+    const currentUser = auth.currentUser;
+    return currentUser && currentUser.email === "admin@soprasteria.com";
+  };
   return (
     <>
       <Row className="mb-2">
@@ -109,7 +115,7 @@ const AssignDeviceList = ({
                 Status {sortBy === "status" && sortOrder === "asc" && "▲"}
                 {sortBy === "status" && sortOrder === "desc" && "▼"}
               </th>
-              <th>Action</th>
+              {isAuthorizedUser() && <th>Action</th>}
             </tr>
           </thead>
           <tbody>
@@ -120,15 +126,17 @@ const AssignDeviceList = ({
                   <td>{doc.selectdevice}</td>
                   <td>{doc.selectuser}</td>
                   <td>{doc.status}</td>
-                  <td>
-                    <Button
-                      variant="danger"
-                      className="delete"
-                      onClick={(e) => deleteHandler(doc.id)}
-                    >
-                      Delete
-                    </Button>
-                  </td>
+                  {isAuthorizedUser() && (
+                    <td>
+                      <Button
+                        variant="danger"
+                        className="delete"
+                        onClick={(e) => deleteHandler(doc.id)}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  )}
                 </tr>
               );
             })}

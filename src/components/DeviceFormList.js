@@ -4,6 +4,7 @@ import { Table, Button } from "react-bootstrap";
 import DeviceDataService from "../services/device.services";
 import { Form, Row, Col } from "react-bootstrap";
 import AssignDeviceDataService from "../services/assign.services";
+import { auth } from "../firebase-config";
 const DeviceFormList = ({ getDeviceId }) => {
   const [devices, setDevices] = useState([]);
   const [sortBy, setSortBy] = useState("");
@@ -101,6 +102,19 @@ const DeviceFormList = ({ getDeviceId }) => {
       device.status.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const isAuthorizedUser = () => {
+    // Check if the logged-in user's email matches the specified email
+    const currentUser = auth.currentUser;
+    return currentUser && currentUser.email === "admin@soprasteria.com";
+  };
+
+  const renderActionColumn = () => {
+    if (isAuthorizedUser()) {
+      return <th>Action</th>;
+    }
+    return null;
+  };
+
   return (
     <>
       <Row className="mb-2">
@@ -140,7 +154,7 @@ const DeviceFormList = ({ getDeviceId }) => {
                 Assigned to {sortBy === "status" && sortOrder === "asc" && "▲"}
                 {sortBy === "status" && sortOrder === "desc" && "▼"}
               </th>
-              <th>Action</th>
+              {renderActionColumn()}
             </tr>
           </thead>
           <tbody>
@@ -151,22 +165,24 @@ const DeviceFormList = ({ getDeviceId }) => {
                   <td>{doc.device}</td>
                   <td>{doc.serial}</td>
                   <td>{doc.status}</td>
-                  <td>
-                    <Button
-                      variant="secondary"
-                      className="edit"
-                      onClick={() => handleEdit(doc.id, doc.status)}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="danger"
-                      className="delete"
-                      onClick={() => deleteHandler(doc.id, doc.status)}
-                    >
-                      Delete
-                    </Button>
-                  </td>
+                  {isAuthorizedUser() && (
+                    <td>
+                      <Button
+                        variant="secondary"
+                        className="edit"
+                        onClick={() => handleEdit(doc.id, doc.status)}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="danger"
+                        className="delete"
+                        onClick={() => deleteHandler(doc.id, doc.status)}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  )}
                 </tr>
               );
             })}

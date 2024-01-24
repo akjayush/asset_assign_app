@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "Inventory Management"
-  }
+    "default": "inventory-management-939b3",
+    "sopra_steria_inventory": "inventory-management-939b3"
+  },
+  "targets": {},
+  "etags": {}
 }

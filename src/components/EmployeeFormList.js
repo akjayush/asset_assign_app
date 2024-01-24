@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button, Form, Row, Col } from "react-bootstrap";
 import EmployeeDataService from "../services/employee.service";
+import { auth } from "../firebase-config";
 
 const EmployeeFormList = ({ getEmployeeId }) => {
   const [employees, setEmployees] = useState([]);
@@ -66,6 +67,18 @@ const EmployeeFormList = ({ getEmployeeId }) => {
       employee.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
       employee.number.toString().includes(searchQuery)
   );
+  const isAuthorizedUser = () => {
+    // Check if the logged-in user's email matches the specified email
+    const currentUser = auth.currentUser;
+    return currentUser && currentUser.email === "admin@soprasteria.com";
+  };
+
+  const renderActionColumn = () => {
+    if (isAuthorizedUser()) {
+      return <th>Action</th>;
+    }
+    return null;
+  };
 
   return (
     <>
@@ -109,7 +122,7 @@ const EmployeeFormList = ({ getEmployeeId }) => {
                 {sortBy === "number" && sortOrder === "asc" && "▲"}
                 {sortBy === "number" && sortOrder === "desc" && "▼"}
               </th>
-              <th>Action</th>
+              {renderActionColumn()}
             </tr>
           </thead>
           <tbody>
@@ -121,22 +134,24 @@ const EmployeeFormList = ({ getEmployeeId }) => {
                   <td>{employee.name}</td>
                   <td>{employee.email}</td>
                   <td>{employee.number}</td>
-                  <td>
-                    <Button
-                      variant="secondary"
-                      className="edit"
-                      onClick={() => getEmployeeId(employee.id)}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="danger"
-                      className="delete"
-                      onClick={() => deleteHandler(employee.id)}
-                    >
-                      Delete
-                    </Button>
-                  </td>
+                  {isAuthorizedUser() && (
+                    <td>
+                      <Button
+                        variant="secondary"
+                        className="edit"
+                        onClick={() => getEmployeeId(employee.id)}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="danger"
+                        className="delete"
+                        onClick={() => deleteHandler(employee.id)}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  )}
                 </tr>
               );
             })}
