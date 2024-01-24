@@ -91,7 +91,7 @@ const Login = () => {
             />
           </Form.Group>
 
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" className="wide-button">
             Submit
           </Button>
         </Form>
