@@ -143,7 +143,7 @@ export default function Navbars() {
               fontSize: "24px",
             }}
           >
-            Asset Assign{" "}
+            Inventory Management{" "}
           </Navbar.Brand>
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"

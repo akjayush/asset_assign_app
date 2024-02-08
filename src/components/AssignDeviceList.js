@@ -101,7 +101,7 @@ const AssignDeviceList = ({
             <tr>
               <th>#</th>
               <th onClick={() => handleSort("selectdevice")}>
-                Device Serial Number
+                Device Name/Serial Number
                 {sortBy === "selectdevice" && sortOrder === "asc" && "▲"}
                 {sortBy === "selectdevice" && sortOrder === "desc" && "▼"}
               </th>

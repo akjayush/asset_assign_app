@@ -80,7 +80,12 @@ const DeviceFormList = ({ getDeviceId }) => {
   };
 
   const sortedDevices = [...devices].sort((a, b) => {
-    if (sortBy === "device" || sortBy === "serial" || sortBy === "status") {
+    if (
+      sortBy === "device" ||
+      sortBy === "serial" ||
+      sortBy === "status" ||
+      sortBy === "condition"
+    ) {
       return sortOrder === "asc"
         ? a[sortBy].localeCompare(b[sortBy])
         : b[sortBy].localeCompare(a[sortBy]);
@@ -99,7 +104,8 @@ const DeviceFormList = ({ getDeviceId }) => {
     (device) =>
       device.device.toLowerCase().includes(searchQuery.toLowerCase()) ||
       device.serial.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      device.status.toLowerCase().includes(searchQuery.toLowerCase())
+      device.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      device.condition.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const isAuthorizedUser = () => {
@@ -154,6 +160,12 @@ const DeviceFormList = ({ getDeviceId }) => {
                 Assigned to {sortBy === "status" && sortOrder === "asc" && "▲"}
                 {sortBy === "status" && sortOrder === "desc" && "▼"}
               </th>
+              <th onClick={() => handleSort("condition")}>
+                Device Condition{" "}
+                {sortBy === "condition" && sortOrder === "asc" && "▲"}
+                {sortBy === "condition" && sortOrder === "desc" && "▼"}
+              </th>
+
               {renderActionColumn()}
             </tr>
           </thead>
@@ -165,6 +177,7 @@ const DeviceFormList = ({ getDeviceId }) => {
                   <td>{doc.device}</td>
                   <td>{doc.serial}</td>
                   <td>{doc.status}</td>
+                  <td>{doc.condition}</td>
                   {isAuthorizedUser() && (
                     <td>
                       <Button

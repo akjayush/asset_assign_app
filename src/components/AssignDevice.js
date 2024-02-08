@@ -5,6 +5,7 @@ import DeviceDataService from "../services/device.services";
 import EmployeeDataService from "../services/employee.service";
 import AssignDeviceDataService from "../services/assign.services";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import Select from "react-select";
 
 const AssignDevice = ({
   getDeviceId,
@@ -136,37 +137,33 @@ const AssignDevice = ({
             </Alert>
           )}
           <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="formBasicEmployee">
-              <Form.Label>Select Device</Form.Label>
-              <Form.Select
-                aria-label="Default select example"
-                value={selectdevice}
-                onChange={(e) => setSelectDevice(e.target.value)}
-              >
-                <option key="blankChoice" hidden value>
-                  {" "}
-                  Open this select menu{" "}
-                </option>
-                {devices.map((doc, index) => (
-                  <option key={index}>{doc.serial}</option>
-                ))}
-              </Form.Select>
-            </Form.Group>
+            <Form.Label>Select Device</Form.Label>
+            <Select
+              value={{ label: selectdevice, value: selectdevice }}
+              onChange={(selectedOption) =>
+                setSelectDevice(selectedOption.value)
+              }
+              options={devices.map((doc) => ({
+                label: `${doc.device} - ${doc.serial}`,
+                value: doc.serial,
+              }))}
+              placeholder="Select Device"
+              isSearchable
+            />
             <Form.Group className="mb-3" controlId="formBasicEmployee">
               <Form.Label>Select User</Form.Label>
-              <Form.Select
-                aria-label="Default select example"
-                value={selectuser}
-                onChange={(e) => setSelectUser(e.target.value)}
-              >
-                <option key="blankChoice" hidden value>
-                  {" "}
-                  Open this select menu{" "}
-                </option>
-                {employees.map((doc, index) => (
-                  <option key={index}>{doc.email}</option>
-                ))}
-              </Form.Select>
+              <Select
+                value={{ label: selectuser, value: selectuser }}
+                onChange={(selectedOption) =>
+                  setSelectUser(selectedOption.value)
+                }
+                options={employees.map((doc) => ({
+                  label: doc.email,
+                  value: doc.email,
+                }))}
+                placeholder="Select User"
+                isSearchable
+              />
               <br />
               <ButtonGroup aria-label="Basic example" className="mb-3">
                 <Button

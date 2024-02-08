@@ -10,7 +10,9 @@ const DeviceForm = ({ id, setDeviceId }) => {
   const [device, setDevice] = useState("");
   const [serial, setSerial] = useState("");
   const [status, setStatus] = useState("Not Assigned");
+  const [condition, setCondition] = useState("Working");
   const [flag, setFlag] = useState(true);
+  const [flag2, setFlag2] = useState(true);
   const [message, setMessage] = useState({ error: false, msg: "" });
 
   useEffect(() => {
@@ -37,6 +39,7 @@ const DeviceForm = ({ id, setDeviceId }) => {
       device,
       serial,
       status,
+      condition,
     };
 
     try {
@@ -123,12 +126,35 @@ const DeviceForm = ({ id, setDeviceId }) => {
               <Button
                 variant="danger"
                 disabled={!flag}
+                style={{ display: "none" }}
                 onClick={(e) => {
                   setStatus("Not Assigned");
                   setFlag(false);
                 }}
               >
                 Not Assigned
+              </Button>
+            </ButtonGroup>
+            <ButtonGroup aria-label="Basic example" className="mb-3">
+              <Button
+                disabled={flag2}
+                variant="success"
+                onClick={(e) => {
+                  setCondition("Working");
+                  setFlag2(true);
+                }}
+              >
+                Working
+              </Button>
+              <Button
+                variant="danger"
+                disabled={!flag2}
+                onClick={(e) => {
+                  setCondition("Not Working");
+                  setFlag2(false);
+                }}
+              >
+                Not Working
               </Button>
             </ButtonGroup>
 
