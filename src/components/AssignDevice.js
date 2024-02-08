@@ -119,6 +119,7 @@ const AssignDevice = ({
       const combinedValue = `${item.device} - ${item.serial}`;
       return !selectdevices.includes(combinedValue);
     });
+    output.sort((a, b) => a.device.localeCompare(b.device));
 
     setDevices(output);
   };
