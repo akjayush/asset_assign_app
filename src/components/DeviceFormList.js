@@ -40,8 +40,10 @@ const DeviceFormList = ({ getDeviceId }) => {
         return { ...doc.data(), id: doc.id, status: "Not Assigned" };
       }
     });
-
-    setDevices(updatedDevices);
+    const sortedDevices = updatedDevices.sort((a, b) =>
+      a.device.localeCompare(b.device)
+    );
+    setDevices(sortedDevices);
   };
 
   const deleteHandler = async (id, status) => {
