@@ -145,7 +145,7 @@ const AssignDevice = ({
               }
               options={devices.map((doc) => ({
                 label: `${doc.device} - ${doc.serial}`,
-                value: doc.serial,
+                value: `${doc.device} - ${doc.serial}`,
               }))}
               placeholder="Select Device"
               isSearchable

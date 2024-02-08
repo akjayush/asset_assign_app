@@ -26,8 +26,9 @@ const DeviceFormList = ({ getDeviceId }) => {
 
     // Combine device data with assignment status
     const updatedDevices = deviceData.docs.map((doc) => {
+      const combinedValue = `${doc.data().device} - ${doc.data().serial}`;
       const assignedDevice = assignedDevices.find(
-        (assigned) => assigned.selectdevice === doc.data().serial
+        (assigned) => assigned.selectdevice === combinedValue
       );
       if (assignedDevice) {
         return {
