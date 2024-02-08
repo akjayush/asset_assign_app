@@ -110,8 +110,16 @@ const AssignDevice = ({
   const getDevices = async () => {
     const data = await DeviceDataService.getAllDevices();
     const selectdevices = assigndevices.map((item) => item.selectdevice);
+
+    // Assuming device and serial are separate properties in the data
     let temp = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    let output = temp.filter((item) => !selectdevices.includes(item.serial));
+
+    // Filter out devices that are already assigned
+    let output = temp.filter((item) => {
+      const combinedValue = `${item.device} - ${item.serial}`;
+      return !selectdevices.includes(combinedValue);
+    });
+
     setDevices(output);
   };
 
