@@ -117,7 +117,11 @@ const AssignDevice = ({
     // Filter out devices that are already assigned
     let output = temp.filter((item) => {
       const combinedValue = `${item.device} - ${item.serial}`;
-      return !selectdevices.includes(combinedValue);
+
+      return (
+        !selectdevices.includes(combinedValue) &&
+        item.condition !== "Not Working"
+      );
     });
     output.sort((a, b) => a.device.localeCompare(b.device));
 

@@ -73,10 +73,21 @@ const DeviceForm = ({ id, setDeviceId }) => {
 
   const editHandler = async () => {
     setMessage("");
+
     try {
       const docSnap = await DeviceDataService.getDevice(id);
       setDevice(docSnap.data().device);
       setSerial(docSnap.data().serial);
+
+      // Set the condition based on the existing data
+      setCondition(docSnap.data().condition);
+
+      // Set the button states based on the condition
+      if (docSnap.data().condition === "Working") {
+        setFlag2(true); // Enable "Working" button
+      } else {
+        setFlag2(false); // Enable "Not Working" button
+      }
     } catch (err) {
       setMessage({ error: true, msg: err.message });
     }
